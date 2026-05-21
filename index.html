@@ -3,78 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Subscriptions Store - Images Added</title>
+    <title>E-Dz Digital Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        /* المتغيرات الأساسية للألوان - تتغير ديناميكياً عبر الجافاسكريبت */
+        /* الألوان الديناميكية المتغيرة وسحر الأزرق الليلي الداكن */
         :root {
-            --primary-color: #00f0ff; /* اللون الافتراضي (سيان) */
-            --bg-color: #0a0b10;
-            --card-bg: #121420;
+            --primary-color: #00a2ff; 
+            --bg-color: #0b0f19;
+            --card-bg: #131926;
             --text-color: #ffffff;
             --text-muted: #8a8d98;
-            --transition: all 0.4s ease;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        /* تطبيق الخطوط حسب اللغة */
+        body[dir="rtl"] * { font-family: 'Cairo', sans-serif; }
+        body[dir="ltr"] * { font-family: 'Poppins', sans-serif; }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
             transition: var(--transition);
-            padding-bottom: 60px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* الهيدر والتحكم باللغات */
+        /* الهيدر الاحترافي الجديد */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background: rgba(18, 20, 32, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(19, 25, 38, 0.85);
+            backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .logo {
-            font-size: 22px;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .store-logo {
+            background: var(--primary-color);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
-            color: var(--primary-color);
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(0, 162, 255, 0.4);
             transition: var(--transition);
         }
 
-        .lang-switcher select {
-            background: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--primary-color);
-            padding: 5px 10px;
-            border-radius: 5px;
-            outline: none;
-            cursor: pointer;
+        .store-name {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
-        /* شريط التصنيفات (تغيير الألوان عند الاختيار) */
+        .controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .controls select {
+            background: #1c2333;
+            color: var(--text-color);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* شريط التصنيفات */
         .categories-bar {
             display: flex;
             justify-content: center;
             gap: 10px;
-            padding: 20px;
+            padding: 25px 20px;
             overflow-x: auto;
         }
 
         .category-btn {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             color: var(--text-color);
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 30px;
             cursor: pointer;
             white-space: nowrap;
@@ -82,126 +117,265 @@
             font-weight: 600;
         }
 
-        /* ألوان مخصصة لكل زر عند التفعيل لتوجيه هوية الموقع */
-        .category-btn.active[data-cat="all"] { border-color: #00f0ff; background: rgba(0, 240, 255, 0.1); }
+        .category-btn.active[data-cat="all"] { border-color: #00a2ff; background: rgba(0, 162, 255, 0.1); }
         .category-btn.active[data-cat="gamepass"] { border-color: #107c10; background: rgba(16, 124, 16, 0.1); }
         .category-btn.active[data-cat="netflix"] { border-color: #e50914; background: rgba(229, 9, 20, 0.1); }
         .category-btn.active[data-cat="playstation"] { border-color: #00439c; background: rgba(0, 67, 156, 0.1); }
         .category-btn.active[data-cat="iptv"] { border-color: #ff9900; background: rgba(255, 153, 0, 0.1); }
+        .category-btn.active[data-cat="games"] { border-color: #9146ff; background: rgba(145, 70, 255, 0.1); }
 
         /* شبكة المنتجات */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            padding: 20px;
+            padding: 0 20px;
             max-width: 1200px;
             margin: 0 auto;
+            flex: 1;
         }
 
         .product-card {
             background: var(--card-bg);
-            border-radius: 15px;
+            border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             transition: var(--transition);
-            position: relative;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--primary-color);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
         }
 
-        /* تنسيق عنصر الصورة الجديد */
         .product-img-element {
             width: 100%;
-            height: 180px; /* الارتفاع الثابت للصورة */
-            object-fit: cover; /* لضمان ملء الصورة للحاوية دون تشويه */
+            height: 190px;
+            object-fit: cover;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
+        .product-info { padding: 20px; }
+        .product-title { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+        
         .product-price {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 15px;
-            transition: var(--transition);
         }
 
         .buy-btn {
             display: block;
             width: 100%;
             background: var(--primary-color);
-            color: #000;
+            color: #fff;
             text-align: center;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: bold;
             transition: var(--transition);
         }
 
-        .buy-btn:hover {
-            opacity: 0.9;
-        }
-
-        /* نافذة الشراء المنبثقة (Modal) */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center; align-items: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
+        /* صفحة الدفع المنفصلة الفخمة */
+        .checkout-container {
+            max-width: 600px;
+            width: 90%;
+            margin: 30px auto;
             padding: 25px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid var(--primary-color);
-            text-align: center;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: none;
         }
 
-        .modal-content input {
-            width: 100%;
-            padding: 10px;
-            margin: 15px 0;
-            background: #1a1d2e;
+        .checkout-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+        }
+
+        .back-btn {
+            background: #1c2333;
             border: 1px solid rgba(255,255,255,0.1);
             color: #fff;
-            border-radius: 5px;
-            text-align: center;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
-        .modal-btns {
+        .order-id-badge {
+            background: rgba(255, 162, 0, 0.1);
+            color: #ffaa00;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .summary-box {
+            background: #181f30;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-inline-start: 4px solid var(--primary-color);
+        }
+
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .method-card {
+            background: #181f30;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .method-card i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+            color: var(--text-muted);
+        }
+
+        .method-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(0, 162, 255, 0.05);
+        }
+
+        .method-card.selected i { color: var(--primary-color); }
+
+        .instruction-box {
+            background: #1f283d;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            display: none;
+            border: 1px dashed rgba(255,255,255,0.1);
+            line-height: 1.6;
+        }
+
+        .checkout-container input {
+            width: 100%;
+            padding: 12px;
+            background: #181f30;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .submit-order-btn {
+            width: 100%;
+            background: #25D366;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
             display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 10px;
         }
 
-        .confirm-btn { background: #25D366; color: white; flex: 1; padding: 10px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer;}
-        .close-btn { background: #333; color: white; padding: 10px; border-radius: 5px; border: none; cursor: pointer;}
+        /* فوتر (أسفل الموقع) الاحترافي الجديد */
+        footer {
+            background: #0e1320;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 30px 20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover { color: var(--primary-color); }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            background: #181f30;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 162, 255, 0.3);
+        }
+
+        .footer-credits {
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 15px;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo" id="logoText">DIGITAL STORE</div>
-        <div class="lang-switcher">
+        <div class="brand">
+            <div class="store-logo" id="logoIcon">E</div>
+            <div class="store-name" id="logoText">E-DZ STORE</div>
+        </div>
+        <div class="controls">
+            <select id="currencySelect" onchange="changeCurrency(this.value)">
+                <option value="DZD">DZD (دج)</option>
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+            </select>
             <select id="langSelect" onchange="changeLanguage(this.value)">
                 <option value="ar">العربية</option>
                 <option value="en">English</option>
@@ -210,170 +384,283 @@
         </div>
     </header>
 
-    <div class="categories-bar">
-        <button class="category-btn active" data-cat="all" onclick="filterCategory('all', '#00f0ff')">الكل / All</button>
-        <button class="category-btn" data-cat="gamepass" onclick="filterCategory('gamepass', '#107c10')">Game Pass</button>
-        <button class="category-btn" data-cat="netflix" onclick="filterCategory('netflix', '#e50914')">Netflix</button>
-        <button class="category-btn" data-cat="playstation" onclick="filterCategory('playstation', '#00439c')">PlayStation</button>
-        <button class="category-btn" data-cat="iptv" onclick="filterCategory('iptv', '#ff9900')">IPTV</button>
+    <div id="storeView">
+        <div class="categories-bar">
+            <button class="category-btn active" data-cat="all" onclick="filterCategory('all', '#00a2ff')">الكل / All</button>
+            <button class="category-btn" data-cat="gamepass" onclick="filterCategory('gamepass', '#107c10')">Game Pass</button>
+            <button class="category-btn" data-cat="netflix" onclick="filterCategory('netflix', '#e50914')">Netflix</button>
+            <button class="category-btn" data-cat="playstation" onclick="filterCategory('playstation', '#00439c')">PlayStation</button>
+            <button class="category-btn" data-cat="iptv" onclick="filterCategory('iptv', '#ff9900')">IPTV</button>
+            <button class="category-btn" data-cat="games" onclick="filterCategory('games', '#9146ff')">شحن ألعاب / Games</button>
+        </div>
+
+        <div class="products-grid">
+            <div class="product-card" data-item-cat="gamepass">
+                <img src="https://placehold.co/600x400/131926/00a2ff?text=Xbox+Game+Pass" alt="Game Pass" class="product-img-element">
+                <div class="product-info">
+                    <div class="product-title" data-key="gp_title">Xbox Game Pass Ultimate</div>
+                    <div class="product-price" data-base-price="230">230 DZD</div>
+                    <a href="#" class="buy-btn" data-key="buy_now" onclick="goToCheckout('Xbox Game Pass Ultimate', 230)">شراء الآن</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-item-cat="netflix">
+                <img src="https://placehold.co/600x400/131926/e50914?text=Netflix+Premium" alt="Netflix" class="product-img-element">
+                <div class="product-info">
+                    <div class="product-title" data-key="nf_title">Netflix Premium 1 Month</div>
+                    <div class="product-price" data-base-price="460">460 DZD</div>
+                    <a href="#" class="buy-btn" data-key="buy_now" onclick="goToCheckout('Netflix Premium 1 Month', 460)">شراء الآن</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-item-cat="games">
+                <img src="https://placehold.co/600x400/131926/9146ff?text=Free+Fire+Diamonds" alt="Free Fire" class="product-img-element">
+                <div class="product-info">
+                    <div class="product-title">Free Fire 100 Diamonds</div>
+                    <div class="product-price" data-base-price="150">150 DZD</div>
+                    <a href="#" class="buy-btn" data-key="buy_now" onclick="goToCheckout('Free Fire 100 Diamonds', 150)">شراء الآن</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-item-cat="games">
+                <img src="https://placehold.co/600x400/131926/9146ff?text=PUBG+Mobile+UC" alt="PUBG Mobile" class="product-img-element">
+                <div class="product-info">
+                    <div class="product-title">PUBG Mobile 60 UC</div>
+                    <div class="product-price" data-base-price="180">180 DZD</div>
+                    <a href="#" class="buy-btn" data-key="buy_now" onclick="goToCheckout('PUBG Mobile 60 UC', 180)">شراء الآن</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-item-cat="games">
+                <img src="https://placehold.co/600x400/131926/9146ff?text=Warzone+Mobile+CP" alt="Warzone" class="product-img-element">
+                <div class="product-info">
+                    <div class="product-title">Warzone Mobile 200 CP</div>
+                    <div class="product-price" data-base-price="300">300 DZD</div>
+                    <a href="#" class="buy-btn" data-key="buy_now" onclick="goToCheckout('Warzone Mobile 200 CP', 300)">شراء الآن</a>
+                </div>
+            </div>
+
+            <div class="product-card" data-item-cat="games">
+                <img src="https://placehold.co/600x400/131926/9146ff?text=eFootball+Coins" alt="eFootball" class="product-img-element">
+                <div class="product-info">
+                    <div class="product-title">eFootball 130 Coins</div>
+                    <div class="product-price" data-base-price="250">250 DZD</div>
+                    <a href="#" class="buy-btn" data-key="buy_now" onclick="goToCheckout('eFootball 130 Coins', 250)">شراء الآن</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="products-grid" id="productsGrid">
+    <div id="checkoutView" class="checkout-container">
+        <div class="checkout-header">
+            <button class="back-btn" onclick="goBackToStore()" id="backBtnText">← عودة للمتجر</button>
+            <span class="order-id-badge" id="orderIdDisplay">#EDZ-0000</span>
+        </div>
+
+        <h3 id="checkoutTitleText" style="margin-bottom: 20px;">صفحة إتمام الدفع</h3>
+
+        <div class="summary-box">
+            <p><strong id="sumProdText">المنتج:</strong> <span id="summaryProduct">-</span></p>
+            <p><strong id="sumPriceText">السعر الإجمالي:</strong> <span id="summaryPrice">-</span></p>
+        </div>
+
+        <h4 style="margin-bottom: 12px;" id="selectPayText">اختر طريقة الدفع المناسبة:</h4>
+        <div class="payment-methods-grid">
+            <div class="method-card" onclick="selectPayment('visa')">
+                <i class="fa-solid fa-credit-card"></i> Visa / RedotPay
+            </div>
+            <div class="method-card" onclick="selectPayment('binance')">
+                <i class="fa-solid fa-money-bill-trend-up"></i> Binance Pay
+            </div>
+            <div class="method-card" onclick="selectPayment('bybit')">
+                <i class="fa-solid fa-chart-line"></i> Bybit
+            </div>
+            <div class="method-card" onclick="selectPayment('baridimob')">
+                <i class="fa-solid fa-building-columns"></i> Baridimob / ECCP
+            </div>
+            <div class="method-card" onclick="selectPayment('flexy')">
+                <i class="fa-solid fa-mobile-screen-button"></i> Flexy
+            </div>
+        </div>
+
+        <div class="instruction-box" id="instructionBox"></div>
+
+        <input type="text" id="buyerName" placeholder="اكتب اسمك الكامل هنا">
+        <input type="text" id="gameIdInput" placeholder="اكتب الـ ID الخاص بك في اللعبة (إذا اخترت لعبة)" style="display:none;">
         
-        <div class="product-card" data-item-cat="gamepass">
-            <img src="https://placehold.co/600x400?text=Xbox+Game+Pass" alt="Xbox Game Pass Ultimate" class="product-img-element">
-            <div class="product-info">
-                <div class="product-title" data-key="gp_title">Xbox Game Pass Ultimate</div>
-                <div class="product-price">00.00 DZD</div>
-                <a href="#" class="buy-btn" data-key="buy_now" onclick="openOrderModal('Xbox Game Pass Ultimate', '00.00 DZD')">شراء الآن</a>
-            </div>
-        </div>
-
-        <div class="product-card" data-item-cat="netflix">
-            <img src="https://placehold.co/600x400?text=Netflix+Subscription" alt="Netflix Premium 1 Month" class="product-img-element">
-            <div class="product-info">
-                <div class="product-title" data-key="nf_title">Netflix Premium 1 Month</div>
-                <div class="product-price">00.00 DZD</div>
-                <a href="#" class="buy-btn" data-key="buy_now" onclick="openOrderModal('Netflix Premium 1 Month', '00.00 DZD')">شراء الآن</a>
-            </div>
-        </div>
-
-        <div class="product-card" data-item-cat="playstation">
-            <img src="https://placehold.co/600x400?text=PlayStation+Plus" alt="PlayStation Plus Essential" class="product-img-element">
-            <div class="product-info">
-                <div class="product-title" data-key="ps_title">PlayStation Plus Essential</div>
-                <div class="product-price">00.00 DZD</div>
-                <a href="#" class="buy-btn" data-key="buy_now" onclick="openOrderModal('PlayStation Plus Essential', '00.00 DZD')">شراء الآن</a>
-            </div>
-        </div>
-
-        <div class="product-card" data-item-cat="iptv">
-            <img src="https://placehold.co/600x400?text=IPTV+Service" alt="IPTV Premium 1 Year" class="product-img-element">
-            <div class="product-info">
-                <div class="product-title" data-key="iptv_title">IPTV Premium 1 Year</div>
-                <div class="product-price">00.00 DZD</div>
-                <a href="#" class="buy-btn" data-key="buy_now" onclick="openOrderModal('IPTV Premium 1 Year', '00.00 DZD')">شراء الآن</a>
-            </div>
-        </div>
-
+        <button class="submit-order-btn" onclick="completeOrder()"><i class="fab fa-whatsapp"></i> تأكيد الطلب وإرسال الفاتورة</button>
     </div>
 
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <h3 id="modalTitle">تأكيد الطلب</h3>
-            <input type="text" id="clientName" placeholder="اكتب اسمك هنا / Enter Your Name">
-            <div class="modal-btns">
-                <button class="confirm-btn" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> إرسال عبر واتساب</button>
-                <button class="close-btn" onclick="closeModal()">إلغاء</button>
+    <footer>
+        <div class="footer-content">
+            <div class="social-icons">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/213XXXXXXXXX" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:example@gmail.com"><i class="fa-solid fa-envelope"></i> example@gmail.com</a>
+                <a href="tel:+213666123456"><i class="fa-solid fa-phone"></i> 0666123456</a>
+                <a href="#" id="feedbackLink" target="_blank"><i class="fa-solid fa-bug"></i> الإبلاغ عن مشكلة / Feedback</a>
+            </div>
+            <div class="footer-credits">
+                <p>&copy; 2026 E-DZ STORE. جميع الحقوق محفوظة.</p>
             </div>
         </div>
-    </div>
+    </footer>
 
     <script>
-        // قاموس اللغات الثلاث للموقع
+        const rates = { DZD: 1, USD: 230, EUR: 250 };
+        let currentCurrency = "DZD";
+        let selectedProduct = { name: "", priceDZD: 0 };
+        let selectedPaymentMethod = "";
+        let currentOrderId = "";
+
+        // ضع رقم الواتساب الخاص بك هنا بالرمز الدولي دون أصفار أو علامة زائد
+        const myWhatsAppNumber = "213XXXXXXXXX";
+
+        // تحديث رابط الدعم الفني في الفوتر تلقائياً
+        document.getElementById('feedbackLink').href = `https://wa.me/${myWhatsAppNumber}?text=${encodeURIComponent("مرحباً، أواجه مشكلة في تصفح الموقع أو لدي اقتراح:")}`;
+
         const i18n = {
             ar: {
-                logo: "متجر الاشتراكات",
-                buy_now: "شراء الآن",
-                gp_title: "إكس بوكس جيم باس ألتيميت",
-                nf_title: "نتفليكس بريميوم 1 شهر",
-                ps_title: "بلايستيشن بلاس الأساسية",
-                iptv_title: "اشتراك IPTV متميز 1 سنة",
-                modal_head: "تأكيد طلبك",
-                name_holder: "اكتب اسمك هنا للاتصال بك"
+                logo: "متجر إي-ديزاد", buy_now: "شراء الآن",
+                gp_title: "إكس بوكس جيم باس ألتيميت", nf_title: "نتفليكس بريميوم 1 شهر",
+                back: "← عودة للمتجر", checkout_title: "صفحة إتمام الدفع",
+                sum_prod: "المنتج:", sum_price: "السعر الإجمالي:", select_pay: "اختر طريقة الدفع المناسبة:",
+                name_holder: "اكتب اسمك الكامل هنا"
             },
             en: {
-                logo: "DIGITAL STORE",
-                buy_now: "Buy Now",
-                gp_title: "Xbox Game Pass Ultimate",
-                nf_title: "Netflix Premium 1 Month",
-                ps_title: "PlayStation Plus Essential",
-                iptv_title: "IPTV Premium 1 Year",
-                modal_head: "Confirm Your Order",
-                name_holder: "Enter your name here"
+                logo: "E-DZ STORE", buy_now: "Buy Now",
+                gp_title: "Xbox Game Pass Ultimate", nf_title: "Netflix Premium 1 Month",
+                back: "← Back to Store", checkout_title: "Checkout Page",
+                sum_prod: "Product:", sum_price: "Total Price:", select_pay: "Select Payment Method:",
+                name_holder: "Enter your full name"
             },
             fr: {
-                logo: "BOUTIQUE DIGITALE",
-                buy_now: "Acheter",
-                gp_title: "Xbox Game Pass Ultimate",
-                nf_title: "Netflix Premium 1 Mois",
-                ps_title: "PlayStation Plus Essential",
-                iptv_title: "IPTV Premium 1 An",
-                modal_head: "Confirmez Votre Commande",
-                name_holder: "Entrez votre nom ici"
+                logo: "BOUTIQUE E-DZ", buy_now: "Acheter",
+                gp_title: "Xbox Game Pass Ultimate", nf_title: "Netflix Premium 1 Mois",
+                back: "← Retour", checkout_title: "Page de Paiement",
+                sum_prod: "Produit:", sum_price: "Prix Total:", select_pay: "Sélectionnez le mode de paiement:",
+                name_holder: "Entrez votre nom complet"
             }
         };
 
-        let currentProduct = "";
-        let currentPrice = "";
-        // ضع رقم الواتساب الخاص بك هنا كاملاً مع رمز الدولة (بدون علامة + أو أصفار إضافية)
-        const myWhatsAppNumber = "213554039356"; 
+        function changeCurrency(currency) {
+            currentCurrency = currency;
+            document.querySelectorAll('.product-price').forEach(el => {
+                const basePrice = parseFloat(el.getAttribute('data-base-price'));
+                el.innerText = formatPrice(basePrice, currency);
+            });
+        }
 
-        // دالة تغيير اللغة
+        function formatPrice(priceInDZD, currency) {
+            const converted = priceInDZD / rates[currency];
+            if (currency === "DZD") return `${converted.toFixed(0)} DZD`;
+            if (currency === "USD") return `$${converted.toFixed(2)}`;
+            if (currency === "EUR") return `${converted.toFixed(2)} €`;
+        }
+
         function changeLanguage(lang) {
             document.documentElement.lang = lang;
             document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-            
             document.getElementById('logoText').innerText = i18n[lang].logo;
-            document.getElementById('modalTitle').innerText = i18n[lang].modal_head;
-            document.getElementById('clientName').placeholder = i18n[lang].name_holder;
-
-            document.querySelectorAll('[data-key]').forEach(element => {
-                const key = element.getAttribute('data-key');
-                if(i18n[lang][key]) {
-                    element.innerText = i18n[lang][key];
-                }
-            });
+            document.getElementById('backBtnText').innerText = i18n[lang].back;
+            document.getElementById('checkoutTitleText').innerText = i18n[lang].checkout_title;
+            document.getElementById('sumProdText').innerText = i18n[lang].sum_prod;
+            document.getElementById('sumPriceText').innerText = i18n[lang].sum_price;
+            document.getElementById('selectPayText').innerText = i18n[lang].select_pay;
+            document.getElementById('buyerName').placeholder = i18n[lang].name_holder;
         }
 
-        // دالة تصفية المنتجات وتغيير هوية لون الموقع ديناميكياً
         function filterCategory(category, colorCode) {
-            // تغيير ألوان الموقع بناء على المنتج المحدد
             document.documentElement.style.setProperty('--primary-color', colorCode);
-
-            // تفعيل الزر المختار بأسلوب بصري مخصص
+            document.getElementById('logoIcon').style.background = colorCode;
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
-                if(btn.getAttribute('data-cat') === category) {
-                    btn.classList.add('active');
-                }
+                if(btn.getAttribute('data-cat') === category) btn.classList.add('active');
             });
-
-            // إخفاء وإظهار المنتجات حسب التصنيف الفعلي
             document.querySelectorAll('.product-card').forEach(card => {
-                if (category === 'all' || card.getAttribute('data-item-cat') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                card.style.display = (category === 'all' || card.getAttribute('data-item-cat') === category) ? 'block' : 'none';
             });
         }
 
-        // إدارة نافذة الشراء والواتساب
-        function openOrderModal(product, price) {
-            currentProduct = product;
-            currentPrice = price;
-            document.getElementById('orderModal').style.display = 'flex';
+        // توليد رقم طلب عشوائي عند الدخول لصفحة الدفع لربط وتنظيم البيانات
+        function generateOrderId() {
+            return '#EDZ-' + Math.floor(1000 + Math.random() * 9000);
         }
 
-        function closeModal() {
-            document.getElementById('orderModal').style.display = 'none';
-        }
-
-        function sendToWhatsApp() {
-            const name = document.getElementById('clientName').value.trim();
-            if(!name) {
-                alert("الرجاء إدخال اسمك أولاً / Please enter your name");
-                return;
+        function goToCheckout(prodName, priceDZD) {
+            selectedProduct = { name: prodName, priceDZD: priceDZD };
+            currentOrderId = generateOrderId();
+            
+            document.getElementById('storeView').style.display = 'none';
+            document.getElementById('checkoutView').style.display = 'block';
+            
+            document.getElementById('orderIdDisplay').innerText = currentOrderId;
+            document.getElementById('summaryProduct').innerText = prodName;
+            document.getElementById('summaryPrice').innerText = formatPrice(priceDZD, currentCurrency);
+            
+            // إظهار حقل الـ ID إذا كان المنتج شحن ألعاب
+            if(prodName.includes("Diamonds") || prodName.includes("UC") || prodName.includes("CP") || prodName.includes("Coins")) {
+                document.getElementById('gameIdInput').style.display = 'block';
+            } else {
+                document.getElementById('gameIdInput').style.display = 'none';
             }
+            window.scrollTo(0, 0);
+        }
+
+        function goBackToStore() {
+            document.getElementById('checkoutView').style.display = 'none';
+            document.getElementById('storeView').style.display = 'block';
+        }
+
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            document.querySelectorAll('.method-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            const infoBox = document.getElementById('instructionBox');
+            infoBox.style.display = 'block';
+
+            if(method === 'visa') infoBox.innerHTML = `💳 <strong>RedotPay ID:</strong> <code>12345678</code><br><span style="color:#ffaa00">⚠️ يرجى كتابة رقم الطلب (${currentOrderId}) في الملاحظات أثناء التحويل.</span>`;
+            if(method === 'binance') infoBox.innerHTML = `🪙 <strong>Binance Pay ID:</strong> <code>87654321</code><br><span style="color:#ffaa00">⚠️ يرجى كتابة رقم الطلب (${currentOrderId}) في الملاحظات أثناء التحويل.</span>`;
+            if(method === 'bybit') infoBox.innerHTML = `📈 <strong>Bybit UID:</strong> <code>11223344</code><br><span style="color:#ffaa00">⚠️ يرجى كتابة رقم الطلب (${currentOrderId}) في الملاحظات.</span>`;
+            if(method === 'baridimob') infoBox.innerHTML = `📬 <strong>Baridimob RIP:</strong> <code>00799999000012345678</code><br><strong>باسم:</strong> Hamza Z.<br><span style="color:#ffaa00">⚠️ يرجى كتابة رقم الطلب (${currentOrderId}) كسبب للتحويل.</span>`;
+            if(method === 'flexy') infoBox.innerHTML = `📱 <strong>رقم الفليكسي:</strong> <code>0666123456</code><br>أرسل المبلغ المطلوب للرقم مباشرة.`;
+        }
+
+        function completeOrder() {
+            const name = document.getElementById('buyerName').value.trim();
+            const gameId = document.getElementById('gameIdInput').value.trim();
             
-            // صياغة الرسالة التلقائية التي ستصلك على الواتساب
-            const message = `مرحباً، أود شراء اشتراك:\n🎁 المنتج: ${currentProduct}\n💰 السعر: ${currentPrice}\n👤 الاسم: ${name}`;
-            const encodedMessage = encodeURIComponent(message);
+            if(!name) { alert("الرجاء إدخال اسمك الكامل"); return; }
+            if(!selectedPaymentMethod) { alert("الرجاء اختيار طريقة الدفع"); return; }
+
+            const finalPrice = formatPrice(selectedProduct.priceDZD, currentCurrency);
             
-            // فتح الواتساب
-            window.open(`https://wa.me/${myWhatsAppNumber}?text=${encodedMessage}`, '_blank');
-            closeModal();
+            // 1. إرسال خفي لحفظ البيانات تلقائياً في Google Sheets عبر Formspree
+            // بمجرد أن تنشئ حساباً مجانياً على Formspree ضع الرابط الخاص بك بالأسفل بدلاً من 'YOUR_ENDPOINT'
+            fetch('https://formspree.io/f/YOUR_ENDPOINT', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "رقم الطلب": currentOrderId,
+                    "الاسم": name,
+                    "المنتج": selectedProduct.name,
+                    "السعر": finalPrice,
+                    "طريقة الدفع": selectedPaymentMethod.toUpperCase(),
+                    "ID اللعبة": gameId || "ليس لعبة"
+                })
+            }).catch(err => console.log("Formspree setup pending..."));
+
+            // 2. صياغة وتجهيز رسالة الفاتورة المكتملة لإرسالها للواتساب
+            let message = `🛒 *فاتورة طلب جديدة من المتجر* 🛒\n\n📌 *رقم الطلب:* ${currentOrderId}\n👤 *اسم المشتري:* ${name}\n🎁 *المنتج المطلـوب:* ${selectedProduct.name}`;
+            if(gameId) { message += `\n🎮 *ID اللعبة:* ${gameId}`; }
+            message += `\n💰 *السعر الإجمالي:* ${finalPrice}\n💳 *طريقة الـدفع:* ${selectedPaymentMethod.toUpperCase()}\n\n⏳ _أنا أرسل لك الآن لقطة شاشة (وصل التحويل) لتأكيد طلبي وتفعيله._`;
+            
+            window.open(`https://wa.me/${myWhatsAppNumber}?text=${encodeURIComponent(message)}`, '_blank');
         }
     </script>
 </body>
